@@ -98,7 +98,13 @@ questions = ["If you didn't have to sleep, what would you do with the extra time
 
 @api.route('/question', methods=['GET'])
 def get_questions():
-    return jsonify({'question': questions[random.randrange(len(questions))]})
+    return jsonify(
+        {
+         "messages": [
+           {"text": questions[random.randrange(len(questions))]},
+         ]
+        }
+    )
 
 
 @api.route('/chatbot/api/check', methods=['POST'])
