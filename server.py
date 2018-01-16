@@ -104,15 +104,16 @@ headers = {'Ocp-Apim-Subscription-Key': key,
 
 @app.route("/chatbot/api/questions", methods=["GET"])
 def getQuestion():
-    text = "hollo werld"
+    # text = "hollo werld"
 
-    payload = {'mkt': 'en-US',
-            'mode': 'proof',
-            'text': text}
+    # payload = {'mkt': 'en-US',
+    #         'mode': 'proof',
+    #         'text': text}
 
-    r = requests.get(fullPath, headers=headers, params=payload)
+    # r = requests.get(fullPath, headers=headers, params=payload)
 
-    return jsonify(r.json())
+    # return jsonify(r.json())
+    return questions[int(random.random()*len(questions))]
 
 def returnRandomQ():
     randIndex = random.randint(0, len(questions))
