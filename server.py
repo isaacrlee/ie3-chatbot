@@ -102,6 +102,11 @@ fullPath = host + path
 headers = {'Ocp-Apim-Subscription-Key': key,
         'Content-Type': 'application/x-www-form-urlencoded'}
 
+
+@app.route("/", methods=["GET"])
+def home():
+    return "hello world"
+
 @app.route("/chatbot/api/questions", methods=["GET"])
 def getQuestion():
     # text = "hollo werld"
