@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, abort, request
 import random
 import requests
+"""
+prototype for the chatbot
+
+"""
 
 app = Flask(__name__)
 
