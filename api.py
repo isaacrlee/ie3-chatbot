@@ -101,7 +101,7 @@ def get_questions():
     return jsonify(
         {
          "messages": [
-           {"text": questions[random.randrange(len(questions))]},
+           {"tex1": questions[random.randrange(len(questions))]},
          ]
         }
     )
