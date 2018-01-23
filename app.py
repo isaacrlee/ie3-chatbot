@@ -104,7 +104,8 @@ question_list = ["If you didn't have to sleep, what would you do with the extra 
 
 @app.route('/question', methods = ['GET'])
 def select_questions():
-    result = {'question' : question_list[random.randrange(len(question_list))]}
+    result = {'messages':[{
+        'text' : question_list[random.randrange(len(question_list))]}]}
     return jsonify(result)
 
 @app.route('/check', methods = ['POST'])
