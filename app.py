@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, abort, request
 import random
 import requests
+import untangle
+
+from .keys import Azure_Key as API_KEY
 """
 prototype for the chatbot
 
@@ -129,8 +132,23 @@ def check():
 
     res = requests.post(uri, data = params, headers = headers)
 
-    print(type(res.json()))
+    #print(type(res.json()))
     return res.text
+
+
+@app.route('/get-translation', methods = ['GET'])
+def get_translation():
+    if not request.args or not 'text' in request.args:
+        abort(400)
+
+    uri = 'https://api.microsofttranslator.com/V2/Http.svc/Translate'
+
+    headers = {'text':request.args['text'], 'Ocp-Apim-Subscription-Key': API_KEY}
+
+    r = requests.get(uri, headers=headers)
+
+    translated = untangle.parse(r)
+
 
 
 if __name__ == '__main__':
