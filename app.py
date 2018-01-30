@@ -3,7 +3,7 @@ import random
 import requests
 import untangle
 
-from .keys import Azure_Key as API_KEY
+API_KEY = 'e79f72ca42224b07a5f6280ae45a629e'
 """
 prototype for the chatbot
 
@@ -143,11 +143,15 @@ def get_translation():
 
     uri = 'https://api.microsofttranslator.com/V2/Http.svc/Translate'
 
-    headers = {'text':request.args['text'], 'Ocp-Apim-Subscription-Key': API_KEY}
+    headers = {'text':request.args['text'], 'Ocp-Apim-Subscription-Key': API_KEY, 'to': 'es-MX'}
 
     r = requests.get(uri, headers=headers)
 
-    translated = untangle.parse(r)
+    translated = r.text
+    #translated = untangle.parse(translated)
+
+
+    return translated
 
 
 
