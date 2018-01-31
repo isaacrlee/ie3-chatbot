@@ -4,6 +4,8 @@ import requests
 import untangle
 
 API_KEY = 'e79f72ca42224b07a5f6280ae45a629e'
+
+
 """
 prototype for the chatbot
 
@@ -120,7 +122,7 @@ def check():
 
     params = {'mkt': 'en-US', 'mode': 'proof', 'text': text}
 
-    key = '949c30a2757e4b54aceef08c0a3d2aa1'
+    key = 
 
     host = 'https://api.cognitive.microsoft.com'
     path = '/bing/v7.0/spellcheck'
@@ -143,9 +145,12 @@ def get_translation():
 
     uri = 'https://api.microsofttranslator.com/V2/Http.svc/Translate'
 
-    headers = {'text':request.args['text'], 'Ocp-Apim-Subscription-Key': API_KEY, 'to': 'es-MX'}
+    headers = {'Ocp-Apim-Subscription-Key': API_KEY}
+    data = {'text':request.args['text'], 'to':'es'}
 
-    r = requests.get(uri, headers=headers)
+    #uri += '?to=fr-fr' + '&text=' + request.args['text']
+
+    r = requests.get(uri, params=data, headers=headers)
 
     translated = r.text
     #translated = untangle.parse(translated)
