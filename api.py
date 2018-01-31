@@ -135,7 +135,7 @@ def check_text():
 
     new_list = [{"text": i} for i in message]
     return jsonify(
-        {"messages": new_list;})
+        {"messages": new_list})
 
     # ATD.setDefaultKey(key)
     # errs = ATD.checkDocument(text)
