@@ -3,7 +3,7 @@ import random
 import requests
 import untangle
 
-API_KEY = 'e79f72ca42224b07a5f6280ae45a629e'
+API_KEY = 0
 
 
 """
@@ -122,7 +122,7 @@ def check():
 
     params = {'mkt': 'en-US', 'mode': 'proof', 'text': text}
 
-    key = 
+    key = 0
 
     host = 'https://api.cognitive.microsoft.com'
     path = '/bing/v7.0/spellcheck'
