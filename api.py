@@ -111,25 +111,31 @@ def get_questions():
 def check_text():
     if not request.args or 'text' not in request.args:
         abort(400)
-    host = 'https://api.cognitive.microsoft.com'
-    path = '/bing/v7.0/spellcheck?'
-    market = 'en-US'
-    mode = 'proof'
-    key = '949c30a2757e4b54aceef08c0a3d2aa1'
+    host = 'https://languagetool.org'
+    path = '/api/v2/check'
+    language = 'en-US'
     text = request.args.get('text')
 
-    headers = {'Ocp-Apim-Subscription-Key': key}
+    headers = {'Content-Type': application/x-www-form-urlencoded}
 
     uri = host + path
 
     values = {
-        'mkt': market,
-        'mode': mode,
+        'language': language,
         'text': text
     }
 
     response = requests.post(uri, data=values, headers=headers)
-    return jsonify(response.json())
+
+    response_JSON = response.json();
+    message = [];
+
+    for match in response_JSON.matches:
+        message += match.message;
+
+    new_list = [{"text": i} for i in message]
+    return jsonify(
+        {"messages": new_list;})
 
     # ATD.setDefaultKey(key)
     # errs = ATD.checkDocument(text)
