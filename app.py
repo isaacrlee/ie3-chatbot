@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, abort, request
 import random
 import requests
-import untangle
+#import untangle
 
 API_KEY = 0
 
@@ -113,29 +113,36 @@ def select_questions():
         'text' : question_list[random.randrange(len(question_list))]}]}
     return jsonify(result)
 
-@app.route('/check', methods = ['POST'])
-def check():
-    if not request.args or not 'text' in request.args:
+@app.route('/chatbot/api/check', methods=['POST'])
+def check_text():
+    if not request.args or 'text' not in request.args:
         abort(400)
-
+    host = 'https://languagetool.org'
+    path = '/api/v2/check'
+    language = request.args.get('language')
     text = request.args.get('text')
 
-    params = {'mkt': 'en-US', 'mode': 'proof', 'text': text}
-
-    key = 0
-
-    host = 'https://api.cognitive.microsoft.com'
-    path = '/bing/v7.0/spellcheck'
-
-    headers = {'Ocp-Apim-Subscription-Key': key,
-    'Content-Type': 'application/x-www-form-urlencoded'}
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
     uri = host + path
 
-    res = requests.post(uri, data = params, headers = headers)
+    values = {
+        'language': language,
+        'text': text
+    }
 
-    #print(type(res.json()))
-    return res.text
+    response = requests.post(uri, data=values, headers=headers)
+
+    response_JSON = response.json();
+    messages = [];
+
+    if response_JSON['matches']:
+        for match in response_JSON['matches']:
+            messages.append(match['message']);
+        new_list = [{"text": i} for i in messages]
+
+    return jsonify(
+        {"messages": new_list})
 
 
 @app.route('/get-translation', methods = ['GET'])
