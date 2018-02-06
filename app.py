@@ -108,14 +108,14 @@ question_list = ["If you didn't have to sleep, what would you do with the extra 
              "What question would you most like to know the answer to?"]
 
 @app.route('/question', methods = ['GET'])
-def select_questions():
+def get_question():
     result = {'messages':[{
         'text' : question_list[random.randrange(len(question_list))]}]}
     return jsonify(result)
 
-@app.route('/chatbot/api/check', methods=['POST'])
+@app.route('/check-text', methods=['POST'])
 def check_text():
-    if not request.args or 'text' not in request.args:
+    if not request.args or 'text' not in request.args or 'language' not in request.args:
         abort(400)
     host = 'https://languagetool.org'
     path = '/api/v2/check'
