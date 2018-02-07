@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, abort, request
 import random
 import requests
+import re
 #import untangle
 
 API_KEY = "e79f72ca42224b07a5f6280ae45a629e"
@@ -160,6 +161,11 @@ def get_translation():
     r = requests.get(uri, params=data, headers=headers)
 
     translated = r.text
+
+    translated = re.search('>.*<', translated)
+    translated = translated.group(0)
+    translated = translated[1:len(translated) - 1]
+
     #translated = untangle.parse(translated)
 
 
