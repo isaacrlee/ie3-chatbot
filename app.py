@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, abort, request
+from database import session, User, base, engine
 import random
 import requests
 import untangle
 
-API_KEY = 0
+API_KEY = 'e79f72ca42224b07a5f6280ae45a629e'
 
 
 """
@@ -112,6 +113,16 @@ def select_questions():
     result = {'messages':[{
         'text' : question_list[random.randrange(len(question_list))]}]}
     return jsonify(result)
+
+@app.route('/addJoe', methods = ['GET'])
+def add():
+
+    joe = User(firstName='Joe', lastName='Adams', messengerID='345', targetLanguageKey='es')
+    session.add(joe)
+
+    return 'hi'
+    # return session.query(User).filter_by(firstName='Joe').first()
+
 
 @app.route('/check', methods = ['POST'])
 def check():
