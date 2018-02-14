@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, abort, request
 import random
 import requests
-#import untangle
+import untangle
+import sqlite3
 
-API_KEY = 0
+API_KEY = 'e79f72ca42224b07a5f6280ae45a629e'
+
 
 
 """
@@ -126,23 +128,31 @@ def check_text():
 
     uri = host + path
 
+    lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en'}
+
     values = {
-        'language': language,
+        'language': 'en',
         'text': text
     }
 
     response = requests.post(uri, data=values, headers=headers)
+    print(response)
 
     response_JSON = response.json();
     messages = [];
+
+    new_list = None
 
     if response_JSON['matches']:
         for match in response_JSON['matches']:
             messages.append(match['message']);
         new_list = [{"text": i} for i in messages]
+        return jsonify(
+            {"messages": new_list})
+    else:
+        return jsonify({"messages": "No error found"})
+    #return response_JSON
 
-    return jsonify(
-        {"messages": new_list})
 
 
 @app.route('/get-translation', methods = ['GET'])
