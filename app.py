@@ -114,7 +114,7 @@ def get_question():
         'text' : question_list[random.randrange(len(question_list))]}]}
     return jsonify(result)
 
-@app.route('/check-text', methods=['POST'])
+@app.route('/check-text', methods=['GET', 'POST'])
 def check_text():
     if not request.args or 'text' not in request.args or 'language' not in request.args:
         abort(400)
