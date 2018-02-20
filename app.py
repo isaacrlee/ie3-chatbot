@@ -128,10 +128,10 @@ def check_text():
 
     uri = host + path
 
-    lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en'}
+    lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US'}
 
     values = {
-        'language': 'en-US',
+        'language': lang_map[language.lower()] if language.lower() in lang_map else 'en-US',
         'text': text
     }
 
