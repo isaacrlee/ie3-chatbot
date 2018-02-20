@@ -110,8 +110,16 @@ question_list = ["If you didn't have to sleep, what would you do with the extra 
 
 @app.route('/question', methods = ['GET'])
 def get_question():
+    if 'language' not in request.args:
+        abort(400)
+
+    language = request.args.get('language')
+
+    question = question_list[random.randrange(len(question_list))]
+    if language.lower() is not 'english':
+        question = translate(question, language)
     result = {'messages':[{
-        'text' : question_list[random.randrange(len(question_list))]}]}
+        'text' : question}]}
     return jsonify(result)
 
 @app.route('/check-text', methods=['GET', 'POST'])
@@ -157,28 +165,29 @@ def check_text():
 
 @app.route('/get-translation', methods = ['GET'])
 def get_translation():
-    if not request.args or not 'text' in request.args:
+    if not request.args or not 'text' in request.args or 'language' not in request.args:
         abort(400)
 
-    uri = 'https://api.microsofttranslator.com/V2/Http.svc/Translate'
-
-    headers = {'Ocp-Apim-Subscription-Key': API_KEY}
-    data = {'text':request.args['text'], 'to':'es'}
-
-    #uri += '?to=fr-fr' + '&text=' + request.args['text']
-
-    r = requests.get(uri, params=data, headers=headers)
-
-    translated = r.text
-
-    translated = re.search('>.*<', translated)
-    translated = translated.group(0)
-    translated = translated[1:len(translated) - 1]
-
-    #translated = untangle.parse(translated)
+    return translate(request.args.get('text'), request.args.get('language'))
 
 
-    return translated
+def translate(text, language):
+        lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US'}
+        uri = 'https://api.microsofttranslator.com/V2/Http.svc/Translate'
+
+        headers = {'Ocp-Apim-Subscription-Key': API_KEY}
+        data = {'text': text,
+                'to':lang_map[language.lower()] if language.lower() in lang_map else 'en-US'}
+
+        r = requests.get(uri, params=data, headers=headers)
+
+        translated = r.text
+
+        translated = re.search('>.*<', translated)
+        translated = translated.group(0)
+        translated = translated[1:len(translated) - 1]
+
+        return translated
 
 
 
