@@ -116,12 +116,13 @@ def get_question():
 
 @app.route('/check-text', methods=['GET', 'POST'])
 def check_text():
-    if not request.data or 'text' not in request.data or 'language' not in request.data:
+    print(request.form)
+    if not request.form or 'text' not in request.form or 'language' not in request.form:
         abort(400)
     host = 'https://languagetool.org'
     path = '/api/v2/check'
-    language = request.args.get('language')
-    text = request.args.get('text')
+    language = request.form.get('language')
+    text = request.form.get('text')
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
@@ -130,7 +131,7 @@ def check_text():
     lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en'}
 
     values = {
-        'language': 'en',
+        'language': 'en-US',
         'text': text
     }
 
