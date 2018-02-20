@@ -149,7 +149,7 @@ def check_text():
         return jsonify(
             {"messages": new_list})
     else:
-        return jsonify({"messages": "No error found"})
+        return jsonify({"messages": [{"text" : "no error"}]})
     #return response_JSON
 
 
