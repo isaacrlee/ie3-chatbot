@@ -116,7 +116,7 @@ def get_question():
 
 @app.route('/check-text', methods=['GET', 'POST'])
 def check_text():
-    if not request.args or 'text' not in request.args or 'language' not in request.args:
+    if not request.data or 'text' not in request.data or 'language' not in request.data:
         abort(400)
     host = 'https://languagetool.org'
     path = '/api/v2/check'
