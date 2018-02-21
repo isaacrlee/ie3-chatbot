@@ -119,9 +119,17 @@ def add():
 
     joe = User(firstName='Joe', lastName='Adams', messengerID='345', targetLanguageKey='es')
     session.add(joe)
+    session.commit()
 
-    return 'hi'
-    # return session.query(User).filter_by(firstName='Joe').first()
+    # return 'hi'
+    return 'joe added'
+
+@app.route('/getJoe', methods = ['GET'])
+def getJoe():
+    joe = session.query(User).filter_by(firstName='Joe').first()
+    print joe.__dict__
+    return joe.firstName 
+
 
 
 @app.route('/check', methods = ['POST'])

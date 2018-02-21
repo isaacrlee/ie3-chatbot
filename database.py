@@ -18,7 +18,7 @@ class User(base):
 	targetLanguageKey = Column(String)
 
 	def __repr__(self):
-		return ("<User(Name = %s, messengerID = %s, targetLanguageKey = %s" %
+		return ("<User(Name = %s, messengerID = %s, targetLanguageKey = %s)>" %
 		(self.firstName + ' ' + self.lastName, self.messengerID, self.targetLanguageKey))
 
 	def addUser(self):
@@ -27,7 +27,3 @@ class User(base):
 base.metadata.create_all(engine)
 
 
-joe = User(firstName='Joe', lastName='Adams', messengerID='345', targetLanguageKey='es')
-session.add(joe)
-
-print session.query(User).filter_by(firstName='Joe').first()
