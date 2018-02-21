@@ -136,7 +136,7 @@ def check_text():
 
     uri = host + path
 
-    lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US'}
+    lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US', 'italian' : 'it'}
 
     values = {
         'language': lang_map[language.lower()] if language.lower() in lang_map else 'en-US',
@@ -172,7 +172,7 @@ def get_translation():
 
 
 def translate(text, language):
-        lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US'}
+        lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US', 'italian' : 'it'}
         uri = 'https://api.microsofttranslator.com/V2/Http.svc/Translate'
 
         headers = {'Ocp-Apim-Subscription-Key': API_KEY}
