@@ -108,7 +108,7 @@ question_list = ["If you didn't have to sleep, what would you do with the extra 
              "What is the most impressive thing you know how to do?",
              "What do you wish you knew more about?",
              "What question would you most like to know the answer to?"]
-
+"""
 @app.route('/addJoe', methods = ['GET'])
 def add():
 
@@ -124,6 +124,7 @@ def getJoe():
     joe = session.query(User).filter_by(firstName='Joe').first()
     print joe.__dict__
     return joe.firstName
+"""
 
 @app.route('/question', methods = ['GET'])
 def get_question():

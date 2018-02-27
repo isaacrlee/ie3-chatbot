@@ -35,7 +35,7 @@ class User(base):
 
 def FindUser(idNumber):
 	idString = str(idNumber)
-	print idString
+	print(idString)
 	if len(session.query(User).filter_by(messengerID=idString).all()) == 0:
 		return None
 
@@ -47,5 +47,3 @@ def PrintDB():
 
 
 base.metadata.create_all(engine)
-
-
