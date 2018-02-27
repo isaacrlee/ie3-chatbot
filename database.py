@@ -2,8 +2,9 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.sql import exists
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-engine = create_engine(config['DATABASE_URL'], echo=True)
+engine = create_engine(os.environ['DATABASE_URL'], echo=True)
 base = declarative_base()
 
 Session = sessionmaker(bind=engine)
