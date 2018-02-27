@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, abort, request
-from database import session, User, base, engine
+from database import session, User, base, engine, FindUser, PrintDB
 import random
 import requests
 import re
@@ -138,6 +138,34 @@ def get_question():
     result = {'messages':[{
         'text' : question}]}
     return jsonify(result)
+
+@app.route('/login-user', methods=['POST'])
+def new_user():
+    if not request.form or 'messenger_user_id' not in request.form:
+        abort(400, {'message': 'wrong params in request'})
+
+    messengerID = request.form.get('messenger_user_id')
+    user = FindUser(messengerID)
+
+    if 'language' in request.form:
+        languageKey = request.form.get('language')
+
+        if user:
+            user.updateUser(languageKey)
+            return languageKey
+        else:
+            newUser = User(messengerID, languageKey)
+            newUser.addUser()
+            PrintDB()
+            return languageKey
+
+    else:
+        if (user):
+            return user.targetLanguageKey
+        else:
+            abort(400, {'message': "user not in database"})
+
+
 
 @app.route('/check-text', methods=['GET', 'POST'])
 def check_text():
