@@ -3,7 +3,7 @@ from sqlalchemy.sql import exists
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///users.db', echo=True)
+engine = create_engine(config['DATABASE_URL'], echo=True)
 base = declarative_base()
 
 Session = sessionmaker(bind=engine)
