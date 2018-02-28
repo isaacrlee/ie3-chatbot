@@ -151,20 +151,47 @@ def new_user():
     if 'language' in request.form:
         languageKey = request.form.get('language')
 
+        lang_map = {'french' : 'fr', 'spanish' : 'es', 'english' : 'en-US', 'italian' : 'it'}
+
+        languageKey = lang_map[languageKey.lower()] if language.lower() in lang_map else 'en-US'
+
         if user:
             user.updateUser(languageKey)
-            return languageKey
+            result =  {
+            "set_attributes":
+                {
+                    "language": languageKey,
+                }
+            'messages':[{'text' : ''}]
+            }
         else:
             newUser = User(messengerID, languageKey)
             newUser.addUser()
             PrintDB()
-            return languageKey
-
+            result = {
+            "set_attributes":
+                {
+                    "language": languageKey,
+                }
+            'messages':[{'text' : ''}]
+            }
+            return jsonify(result)
     else:
         if (user):
-            return user.targetLanguageKey
+            result = {
+            "set_attributes":
+                {
+                    "language": user.targetlanguageKey,
+                }
+            'messages':[{'text' : user.targetLanguageKey}]
+            }
+            return result
         else:
-            abort(400, {'message': "user not in database"})
+            result = {
+            'messages':[{'text' : ''}]
+            }
+
+            # abort(400, {'message': "user not in database"})
 
 
 
